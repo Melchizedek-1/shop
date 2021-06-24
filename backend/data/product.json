@@ -1,0 +1,32 @@
+[
+    {
+        "name" : "San Disk",
+        "price" : "40.67",
+        "description" : "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+        "ratings" : 3.7,
+        "images" : [{
+            "public_id" : "shop/tiger",
+            "url" : "https://res.cloudinary.com/baron456/image/upload/v1624530862/shop/tent.jpg"
+        }],
+        "category" : "Electronics",
+        "seller" : "Amazon",
+        "stock" : 12,
+        "numOfReviews" : 234,
+        "reviews" : []
+    },
+    {
+        "name" : "Tigeress",
+        "price" : "900.67",
+        "description" : "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+        "ratings" : 4.7,
+        "images" : [{
+            "public_id" : "shop/rain",
+            "url" : "https://res.cloudinary.com/baron456/image/upload/v1624530862/shop/rain.jpg"
+        }],
+        "category" : "Books",
+        "seller" : "Jumia",
+        "stock" : 124,
+        "numOfReviews" : 24,
+        "reviews" : []
+    }
+]
