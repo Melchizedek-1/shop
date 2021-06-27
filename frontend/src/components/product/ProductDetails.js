@@ -8,22 +8,23 @@ import { getProductDetails, clearErrors } from '../../actions/productActions'
 
 const ProductDetails = ({ match }) => {
 
-    const disptach = useDispatch();
+    const dispatch = useDispatch();
     const alert = useAlert();
 
     const { loading, error, product } = useSelector(state => state.productDetails);
     useEffect(() => {
-        disptach(getProductDetails(match.params.id))
+        dispatch(getProductDetails(match.params.id))
         if(error) {
             alert.error(error);
-            disptach(clearErrors());
+            dispatch(clearErrors());
         }
-    }, [disptach, alert, error, match.params.id]);
+    }, [dispatch, alert, error, match.params.id]);
 
     return (
         <Fragment>
         {loading ? <Loader /> : (
             <Fragment>
+                <MetaData title={product.name} />
             <div className="row f-flex justify-content-around">
             <div className="col-12 col-lg-5 img-fluid" id="product_image">
                 <Carousel pause='hover'>
