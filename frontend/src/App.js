@@ -8,6 +8,7 @@ import ProductDetails from './components/product/ProductDetails';
 import Login from './components/user/Login';
 import Register from './components/user/Register';
 import Profile from './components/user/Profile';
+import Cart from './components/cart/Cart';
 import UpdateProfile from './components/user/UpdateProfile';
 import UpdatePassword from './components/user/UpdatePassword';
 import ForgotPassword from './components/user/ForgotPassword';
@@ -28,6 +29,7 @@ function App() {
         <Header />
         <div className="container container-fluid">
           <Route path="/" component={Home} exact />
+          <Route path="/cart" component={Cart} exact />
           <Route path="/search/:keyboard" component={Home} />
           <Route path="/product/:id" component={ProductDetails} exact />
           <Route path="/login" component={Login} />
