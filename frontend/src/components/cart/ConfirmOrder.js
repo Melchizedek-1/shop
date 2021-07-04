@@ -22,13 +22,13 @@ const ConfirmOrder = ({ history }) => {
             totalPrice
         }
         sessionStorage.setItem('orderInfo', JSON.stringify(data))
-        history.push('/')
+        history.push('/payment')
     }
     
     return (
         <Fragment>
             <MetaData title={'Confirm Your Order'} />
-            <CheckoutSteps confirmOrder />
+            <CheckoutSteps shipping confirmOrder />
 
             <div class="row d-flex justify-content-between">
             <div class="col-12 col-lg-8 mt-5 order-confirm">
