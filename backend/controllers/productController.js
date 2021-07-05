@@ -15,6 +15,7 @@ exports.newProduct = catchAsyncErrors( async (req, res, next) => {
     })
 }) 
 
+//Get all products => /api/v1/products?keyword=apple
 exports.getProducts = catchAsyncErrors( async (req, res, next) => {
 
     const restPerPage = 8
@@ -26,15 +27,35 @@ exports.getProducts = catchAsyncErrors( async (req, res, next) => {
     apiFeatures.pagination(restPerPage)
     products = await apiFeatures.query;
 
-    setTimeout(() => {
-        res.status(200).json({
-            success: true,
-            productsCount,
-            restPerPage,
-            filteredProductsCount,
-            products
-        })
-    }, 2000);
+    // setTimeout(() => {
+    //     res.status(200).json({
+    //         success: true,
+    //         productsCount,
+    //         restPerPage,
+    //         filteredProductsCount,
+    //         products
+    //     })
+    // }, 2000);
+
+    res.status(200).json({
+        success: true,
+        productsCount,
+        restPerPage,
+        filteredProductsCount,
+        products
+    });
+    
+})
+
+//Get all products (Admin) => /api/v1/admin/products
+exports.getAdminProducts = catchAsyncErrors( async (req, res, next) => {
+
+    const products = await Product.find();
+
+    res.status(200).json({
+        success: true,
+        products
+    })
     
 })
 
