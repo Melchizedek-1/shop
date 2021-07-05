@@ -2,26 +2,45 @@ import React, {useEffect, useState, Fragment} from 'react'
 import { Carousel } from 'react-bootstrap'
 import Loader from '../layouts/Loader'
 import MetaData from '../layouts/MetaData'
+import ListReviews from '../review/ListReviews'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { getProductDetails, clearErrors } from '../../actions/productActions'
+import { getProductDetails, clearErrors, newReview } from '../../actions/productActions'
 import {  addItemToCart } from '../../actions/cartActions'
+import { NEW_REVIEW_RESET } from '../../constants/productConstants'
 
 const ProductDetails = ({ match }) => {
 
     const [quantity, setQuantity] = useState(1)
+    const [rating, setRating] = useState(0);
+    const [comment, setComment] = useState('');
 
     const dispatch = useDispatch();
     const alert = useAlert();
 
     const { loading, error, product } = useSelector(state => state.productDetails);
+    const { user } = useSelector(state => state.auth)
+    const { error: reviewError, success } = useSelector(state => state.newReview)
+
     useEffect(() => {
         dispatch(getProductDetails(match.params.id))
+
         if(error) {
             alert.error(error);
             dispatch(clearErrors());
         }
-    }, [dispatch, alert, error, match.params.id]);
+
+        if(reviewError) {
+            alert.error(reviewError);
+            dispatch(clearErrors());
+        }
+
+        if(success) {
+            alert.success('Review posted successfully')
+            dispatch({ type: NEW_REVIEW_RESET})
+        }
+
+    }, [dispatch, alert, error, reviewError, match.params.id]);
 
     const addToCart = () => {
         dispatch(addItemToCart(match.params.id, quantity));
@@ -40,6 +59,52 @@ const ProductDetails = ({ match }) => {
         if(count.valueAsNumber <= 1) return;
         const qty = count.valueAsNumber - 1;
         setQuantity(qty)
+    }
+
+    function setUserRatings() {
+        const stars = document.querySelectorAll('.star');
+
+        stars.forEach((star, index) => {
+            star.starValue = index + 1;
+            ['click', 'mouseover', 'mouseout'].forEach(function(e) {
+                star.addEventListener(e, showRatings);
+            })
+        })
+
+        function showRatings(e) {
+            stars.forEach((star, index) => {
+                if(e.type === 'click') {
+                    if(index < this.starValue) {
+                        star.classList.add('orange');
+                        setRating(this.starValue)
+                    } else {
+                        star.classList.remove('orange')
+                    }
+                }
+
+                if(e.type === 'mouseover') {
+                    if(index < this.starValue) {
+                        star.classList.add('yellow');
+                    } else {
+                        star.classList.remove('yellow')
+                    }
+                }
+
+                if(e.type === 'mouseout') {
+                    star.classList.remove('yellow')
+                }
+            })
+        }
+    }
+
+    const reviewHandler = () => {
+        const formData = new FormData();
+
+        formData.set('rating', rating);
+        formData.set('comment', comment);
+        formData.set('productId', match.params.id);
+
+        dispatch(newReview(formData));
     }
 
     return (
@@ -93,9 +158,14 @@ const ProductDetails = ({ match }) => {
                 <hr />
                 <p id="product_seller mb-3">Sold by: <strong>{product.seller}</strong></p>
 				
-				<button id="review_btn" type="button" className="btn btn-primary mt-4" data-toggle="modal" data-target="#ratingModal">
-                            Submit Your Review
-                </button>
+                {user ? 
+                    <button id="review_btn" type="button" className="btn btn-primary mt-4" data-toggle="modal" data-target="#ratingModal" onClick={setUserRatings}>
+                        Submit Your Review
+                    </button>
+                    :
+                    <div className="alert alert-danger mt-5" type='alert'>Login to post your review</div>
+                }
+				
 				
 				<div className="row mt-2 mb-5">
                     <div className="rating w-50">
@@ -119,11 +189,11 @@ const ProductDetails = ({ match }) => {
                                             <li className="star"><i className="fa fa-star"></i></li>
                                         </ul>
 
-                                        <textarea name="review" id="review" className="form-control mt-3">
+                                        <textarea name="review" id="review" className="form-control mt-3" value={comment} onChange={(e) => setComment(e.target.value)}>
 
                                         </textarea>
 
-                                        <button className="btn my-3 float-right review-btn px-4 text-white" data-dismiss="modal" aria-label="Close">Submit</button>
+                                        <button className="btn my-3 float-right review-btn px-4 text-white" onClick={reviewHandler} data-dismiss="modal" aria-label="Close">Submit</button>
                                     </div>
                                 </div>
                             </div>
@@ -132,9 +202,12 @@ const ProductDetails = ({ match }) => {
                     </div>
 						
             </div>
+            </div>
+        </div>
 
-        </div>
-        </div>
+        {product.reviews && product.reviews.length > 0 && (
+            <ListReviews reviews={product.reviews} />
+        )}
             </Fragment>
         )}
         </Fragment>
