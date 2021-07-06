@@ -1,4 +1,5 @@
-import { Link, Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { MDBDataTable } from 'mdbreact'
 import MetaData from '../layouts/MetaData'
 import Loader from '../layouts/Loader'
