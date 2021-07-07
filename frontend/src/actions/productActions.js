@@ -110,7 +110,7 @@ export const updateProduct = (id, productData) => async (dispatch) => {
 export const getProductDetails = (id) => async (dispatch) => {
     try {
         dispatch({ type: PRODUCT_DETAILS_REQUEST })
-        const { data } = await axios.get(`/api/v1/product/${id}`)
+        const { data } = await axios.get(`/api/v1/admin/product/${id}`)
         dispatch({
             type: PRODUCT_DETAILS_SUCCESS,
             payload: data.product
