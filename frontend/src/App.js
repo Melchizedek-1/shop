@@ -88,7 +88,7 @@ function App() {
           <ProtectedRoute path="/password/update" component={UpdatePassword} exact />
 
           <ProtectedRoute path="/orders/me" component={ListOrders} exact />
-          <ProtectedRoute path="/orders/:id" component={OrderDetails} exact />
+          <ProtectedRoute path="/order/:id" component={OrderDetails} exact />
         </div>
         <ProtectedRoute path="/dashboard" isAdmin={true} component={Dashboard} exact />
         <ProtectedRoute path="/admin/products" isAdmin={true} component={ProductsList} exact />

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const orderSchema = mongoose.Schema({
-    shippinInfo: {
+    shippingInfo: {
         address: {
             type: String,
             required: true
@@ -64,7 +64,7 @@ const orderSchema = mongoose.Schema({
     paidAt : {
         type: Date
     },
-    itemPrice : {
+    itemsPrice : {
         type: Number,
         required: true,
         default: 0.0

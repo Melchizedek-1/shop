@@ -13,13 +13,14 @@ const ListOrders = () => {
     const alert = useAlert();
     const dispatch = useDispatch();
 
-    const { loading, error, orders } = useSelector(state => state.myOrders);
+    const { loading, error, orders=[] } = useSelector(state => state.myOrders);
 
     useEffect (() => {
         dispatch(myOrders());
 
         if (error) {
             alert.error(error);
+            console.log(error);
             dispatch(clearErrors())
         }
     }, [dispatch, alert, error])

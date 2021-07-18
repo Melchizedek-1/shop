@@ -84,7 +84,7 @@ export const myOrdersReducer = (state = {orders: []}, action) => {
 }
 
 
-export const orderDetailsReducer = (state = { orders: {} }, action) => {
+export const orderDetailsReducer = (state = { order: {} }, action) => {
     switch (action.type) {
         case ORDER_DETAILS_REQUEST:
             return {

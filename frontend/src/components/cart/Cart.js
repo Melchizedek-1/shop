@@ -35,7 +35,7 @@ const Cart = ({ history }) => {
             <MetaData title={'Your Cart'} />
             {cartItems.length === 0? <h2 className="mt-5">Your cart is Empty</h2> : (
                 <Fragment>
-                    <h2 class="mt-5">Your Cart: <b>{cartItems.length}</b></h2>
+                    <h2 className="mt-5">Your Cart: <b>{cartItems.length}</b></h2>
         
                     <div className="row d-flex justify-content-between">
                         <div className="col-12 col-lg-8">

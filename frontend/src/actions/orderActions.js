@@ -40,7 +40,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
         })
     } catch (error) {
         dispatch({
-            type: CREATE_ORDER_FAIL,
+            type: CREATE_ORDER_FAIL, 
             payload: error.response.data.message
         })
     }
@@ -67,7 +67,7 @@ export const myOrders = () => async (dispatch) => {
 export const getOrderDetails = (id) => async (dispatch) => {
     try {
         dispatch({ type: ORDER_DETAILS_REQUEST });
-        const { data } = await axios.get(`/api/v1/orders/${id}`)
+        const { data } = await axios.get(`/api/v1/order/${id}`)
 
         dispatch({
             type: ORDER_DETAILS_SUCCESS,

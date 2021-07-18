@@ -1,7 +1,7 @@
-const Order = require('../models/order')
-const Product = require('../models/product')
-const ErrorHandler = require('../utils/errorHandler')
-const catchAsyncErrors = require('../middlewares/catchAsyncErrors')
+const Order = require('../models/order');
+const Product = require('../models/product');
+const ErrorHandler = require('../utils/errorHandler');
+const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 
 exports.newOrder = catchAsyncErrors( async (req, res, next) => {
     const {
@@ -32,6 +32,7 @@ exports.newOrder = catchAsyncErrors( async (req, res, next) => {
     })
 })
 
+// Get single order /api/v1/order/:id
 exports.getSingleOrder = catchAsyncErrors( async(req, res, next) => {
     const order = await Order.findById(req.params.id).populate('user', 'name email')
 
@@ -45,6 +46,7 @@ exports.getSingleOrder = catchAsyncErrors( async(req, res, next) => {
     })
 })
 
+// Get logged in user orders /api/v1/orders/me
 exports.myOrders = catchAsyncErrors( async(req, res, next) => {
     const orders = await Order.find({ user: req.user.id })
 
@@ -54,10 +56,11 @@ exports.myOrders = catchAsyncErrors( async(req, res, next) => {
     })
 })
 
+// Get all orders admin /api/v1/admin/orders
 exports.allOrders = catchAsyncErrors( async(req, res, next) => {
     const orders = await Order.find()
 
-    let totalAmount = 0
+    let totalAmount = 0;
     orders.forEach(order => {
         totalAmount += order.totalPrice
     })
@@ -69,6 +72,7 @@ exports.allOrders = catchAsyncErrors( async(req, res, next) => {
     })
 })
 
+// Update Process order /api/v1/admin/order/:id
 exports.updateOrders = catchAsyncErrors( async(req, res, next) => {
     const order = await Order.findById(req.params.id)
 
@@ -91,9 +95,9 @@ exports.updateOrders = catchAsyncErrors( async(req, res, next) => {
 })
 
 async function updateStock(id, quantity) {
-    const product = await Product.findById(id)
-    product.stock = product.stock - quantity
-    await product.save({ validateBeforeSave: false })
+    const product = await Product.findById(id);
+    product.stock = product.stock - quantity;
+    await product.save({ validateBeforeSave: false });
 }
 
 exports.deleteOrder = catchAsyncErrors( async(req, res, next) => {

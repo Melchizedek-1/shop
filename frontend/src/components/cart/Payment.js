@@ -33,11 +33,11 @@ const Payment = ({ history }) => {
 
     useEffect (() => {
         if (error) {
-            alert.error(error)
-            dispatch(clearErrors())
+            alert.error(error);
+            dispatch(clearErrors());
         }
     }, [dispatch, alert, error])
-
+    
     const order = {
         orderItems: cartItems,
         shippingInfo
@@ -93,7 +93,7 @@ const Payment = ({ history }) => {
                         status: result.paymentIntent.status
                     }
 
-                    dispatch(createOrder)
+                    dispatch(createOrder(order))
 
                     history.push('/success')
                 } else {
